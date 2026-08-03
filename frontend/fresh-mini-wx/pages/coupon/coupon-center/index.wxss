@@ -1,0 +1,131 @@
+.center {
+  min-height: 100vh;
+  background:
+    linear-gradient(165deg, #1c6b3a 0%, #2f8f52 38%, #f4f1ea 38%, #f4f1ea 100%);
+  padding-bottom: 48rpx;
+  box-sizing: border-box;
+}
+.hero {
+  padding: 48rpx 36rpx 56rpx;
+  color: #fff;
+}
+.brand {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  font-size: 46rpx;
+  font-weight: 700;
+  letter-spacing: 1rpx;
+}
+.headline {
+  margin-top: 18rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+.sub {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 620rpx;
+}
+.hero-actions {
+  margin-top: 32rpx;
+  display: flex;
+  gap: 16rpx;
+}
+.primary-btn,
+.ghost-btn {
+  padding: 18rpx 28rpx;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+.primary-btn {
+  background: #f0b429;
+  color: #1a3d28;
+}
+.primary-btn.disabled {
+  opacity: 0.7;
+}
+.ghost-btn {
+  border: 2rpx solid rgba(255, 255, 255, 0.7);
+  color: #fff;
+}
+.section {
+  margin: 0 24rpx 28rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx 24rpx 8rpx;
+  box-shadow: 0 10rpx 30rpx rgba(28, 107, 58, 0.08);
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16rpx;
+  padding: 0 4rpx;
+}
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1a3d28;
+}
+.section-extra {
+  font-size: 22rpx;
+  color: #8a9a90;
+}
+.section-empty {
+  text-align: center;
+  color: #b0bbb4;
+  font-size: 26rpx;
+  padding: 48rpx 0 56rpx;
+}
+.flash-card {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 8rpx;
+  border-top: 1rpx solid #eef2ef;
+}
+.flash-left {
+  width: 140rpx;
+  text-align: center;
+  color: #d35400;
+}
+.flash-amount {
+  font-size: 44rpx;
+  font-weight: 700;
+}
+.flash-amount .yen {
+  font-size: 22rpx;
+}
+.flash-thr {
+  font-size: 20rpx;
+  color: #999;
+}
+.flash-mid {
+  flex: 1;
+  min-width: 0;
+}
+.flash-title {
+  font-size: 28rpx;
+  color: #222;
+  font-weight: 600;
+}
+.flash-meta {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8a9a90;
+}
+.flash-btn {
+  padding: 14rpx 24rpx;
+  background: #d35400;
+  color: #fff;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+}
+.flash-btn.disabled {
+  background: #c5cdc8;
+}
+.coupon-list-item {
+  padding: 0 0 16rpx;
+}

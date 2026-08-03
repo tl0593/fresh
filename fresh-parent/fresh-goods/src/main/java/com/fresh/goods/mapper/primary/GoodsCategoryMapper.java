@@ -1,0 +1,9 @@
+package com.fresh.goods.mapper.primary;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.fresh.goods.entity.GoodsCategory;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface GoodsCategoryMapper extends BaseMapper<GoodsCategory> {
+}

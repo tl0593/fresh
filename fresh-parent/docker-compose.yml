@@ -1,0 +1,315 @@
+services:
+  # ==================== 基础设施 ====================
+
+  mysql:
+    image: mysql:8.0
+    container_name: fresh-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+      TZ: Asia/Shanghai
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../SQL:/docker-entrypoint-initdb.d
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    networks:
+      - fresh-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: fresh-redis
+    command: redis-server --appendonly yes --requirepass ""
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - fresh-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nacos:
+    image: nacos/nacos-server:v2.1.2
+    container_name: fresh-nacos
+    environment:
+      # 本地用内嵌存储，避免 nacos_config 缺表导致反复崩溃重启
+      - MODE=standalone
+      - JVM_XMS=256m
+      - JVM_XMX=512m
+      - NACOS_AUTH_ENABLE=false
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  rocketmq-nameserver:
+    image: apache/rocketmq:5.1.0
+    container_name: fresh-rmq-nameserver
+    command: sh mqnamesrv
+    ports:
+      - "9877:9876"
+    environment:
+      - JAVA_OPT_EXT=-server -Xms256m -Xmx256m
+    networks:
+      - fresh-net
+
+  rocketmq-broker:
+    image: apache/rocketmq:5.1.0
+    container_name: fresh-rmq-broker
+    command: sh mqbroker -n rocketmq-nameserver:9876
+    ports:
+      - "10911:10911"
+      - "10909:10909"
+    environment:
+      - JAVA_OPT_EXT=-server -Xms512m -Xmx512m
+      - BROKER_IP1=rocketmq-broker
+    depends_on:
+      - rocketmq-nameserver
+    networks:
+      - fresh-net
+
+  # ==================== 微服务 ====================
+
+  fresh-gateway:
+    build:
+      context: ./fresh-gateway
+      dockerfile: Dockerfile
+    container_name: fresh-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - NACOS_ADDR=nacos:8848
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    depends_on:
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  fresh-user:
+    build:
+      context: ./fresh-user
+      dockerfile: Dockerfile
+    container_name: fresh-user
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - NACOS_ADDR=nacos:8848
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DB=fresh_user
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RMQ_NAMESRV=rocketmq-nameserver:9876
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      rocketmq-nameserver:
+        condition: service_started
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  fresh-goods:
+    build:
+      context: ./fresh-goods
+      dockerfile: Dockerfile
+    container_name: fresh-goods
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - TZ=Asia/Shanghai
+      - NACOS_ADDR=nacos:8848
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DB=fresh_goods
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RMQ_NAMESRV=rocketmq-nameserver:9876
+    volumes:
+      # 持久化本地上传图片，避免重建容器后图 404
+      - goods-uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      rocketmq-nameserver:
+        condition: service_started
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  fresh-order:
+    build:
+      context: ./fresh-order
+      dockerfile: Dockerfile
+    container_name: fresh-order
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - NACOS_ADDR=nacos:8848
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DB=fresh_order
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RMQ_NAMESRV=rocketmq-nameserver:9876
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      rocketmq-nameserver:
+        condition: service_started
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  fresh-ai:
+    build:
+      context: ./fresh-ai
+      dockerfile: Dockerfile
+    container_name: fresh-ai
+    ports:
+      - "8084:8084"
+    env_file:
+      - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - NACOS_ADDR=nacos:8848
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DB=fresh_ai
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+      - ROCKETMQ_NAMESERVER=rocketmq-nameserver:9876
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      rocketmq-nameserver:
+        condition: service_started
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  fresh-message:
+    build:
+      context: ./fresh-message
+      dockerfile: Dockerfile
+    container_name: fresh-message
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - NACOS_ADDR=nacos:8848
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DB=fresh_message
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RMQ_NAMESRV=rocketmq-nameserver:9876
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      rocketmq-nameserver:
+        condition: service_started
+    networks:
+      - fresh-net
+    restart: on-failure
+
+  fresh-data:
+    build:
+      context: ./fresh-data
+      dockerfile: Dockerfile
+    container_name: fresh-data
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - NACOS_ADDR=nacos:8848
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DB=fresh_data
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RMQ_NAMESRV=rocketmq-nameserver:9876
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      rocketmq-nameserver:
+        condition: service_started
+      fresh-order:
+        condition: service_started
+      fresh-user:
+        condition: service_started
+    networks:
+      - fresh-net
+    restart: on-failure
+
+networks:
+  fresh-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  redis-data:
+  goods-uploads:

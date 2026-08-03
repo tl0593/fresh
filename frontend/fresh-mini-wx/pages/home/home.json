@@ -1,0 +1,18 @@
+{
+  "navigationBarTitleText": "社区生鲜",
+  "navigationBarBackgroundColor": "#FDE8D0",
+  "backgroundColor": "#f7f5f2",
+  "onReachBottomDistance": 10,
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "t-loading": "tdesign-miniprogram/loading/loading",
+    "t-image": "/components/webp-image/index",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-tabs": "tdesign-miniprogram/tabs/tabs",
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "goods-list": "/components/goods-list/index",
+    "load-more": "/components/load-more/index"
+  }
+}

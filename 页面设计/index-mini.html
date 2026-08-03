@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>智慧生鲜团购小程序</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+        body{background:#f5f5f5;padding-bottom:60px;max-width:430px;margin:0 auto}
+        /* 顶部定位栏 */
+        .top-location{background:#10b981;color:#fff;padding:10px 15px;display:flex;justify-content:space-between;align-items:center}
+        /* 轮播 */
+        .banner{height:160px;background:#d1fae5;margin:10px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#065f46}
+        /* 分类导航 */
+        .cate-wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:10px}
+        .cate-item{text-align:center;padding:8px}
+        .cate-icon{width:40px;height:40px;background:#fff;border-radius:50%;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;color:#10b981}
+        .cate-text{font-size:12px;color:#333}
+        /* 团购模块 */
+        .title{padding:10px 15px;font-weight:bold;font-size:16px}
+        .group-list{padding:0 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .group-card{background:#fff;border-radius:10px;overflow:hidden}
+        .card-img{height:120px;background:#ecfdf5;display:flex;align-items:center;justify-content:center;color:#10b981}
+        .card-body{padding:10px}
+        .card-name{font-size:14px;margin-bottom:6px}
+        .price-row{display:flex;align-items:center}
+        .now-price{color:#ef4444;font-weight:bold;font-size:16px}
+        .old-price{font-size:12px;color:#999;text-decoration:line-through;margin-left:6px}
+        .group-tip{font-size:12px;color:#10b981;margin-top:4px}
+        /* 底部导航 */
+        .tab-bar{position:fixed;bottom:0;left:0;right:0;max-width:430px;margin:0 auto;background:#fff;height:55px;display:flex;border-top:1px solid #eee}
+        .tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:12px}
+        .tab-item.active{color:#10b981}
+        /* 弹窗 */
+        .mask{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center}
+        .pop{width:85%;background:#fff;border-radius:12px;padding:15px}
+        .pop-title{font-weight:bold;margin-bottom:10px}
+        .btn{width:100%;padding:10px;border:none;border-radius:8px;background:#10b981;color:#fff;margin-top:10px}
+        .ai-btn{background:#3b82f6}
+    </style>
+</head>
+<body>
+    <!-- 顶部定位 -->
+    <div class="top-location">
+        <span>📍 阳光花园自提点</span>
+        <span>🔍 搜索生鲜/团购</span>
+    </div>
+    <!-- 轮播广告 -->
+    <div class="banner">【AI生鲜团购 今日限时秒杀】</div>
+    <!-- 分类导航 -->
+    <div class="cate-wrap">
+        <div class="cate-item"><div class="cate-icon">🥬</div><div class="cate-text">蔬菜</div></div>
+        <div class="cate-item"><div class="cate-icon">🍎</div><div class="cate-text">水果</div></div>
+        <div class="cate-item"><div class="cate-icon">🥩</div><div class="cate-text">肉禽</div></div>
+        <div class="cate-item"><div class="cate-icon">🥚</div><div class="cate-text">蛋奶</div></div>
+        <div class="cate-item"><div class="cate-icon">⏰</div><div class="cate-text">秒杀</div></div>
+        <div class="cate-item"><div class="cate-icon">🤖</div><div class="cate-text">AI菜谱</div></div>
+    </div>
+
+    <!-- 团购专区 -->
+    <div class="title">🔥 今日社区团购（AI智能推荐）</div>
+    <div class="group-list">
+        <div class="group-card" onclick="openDetail()">
+            <div class="card-img">新鲜草莓</div>
+            <div class="card-body">
+                <div class="card-name">奶油草莓 500g</div>
+                <div class="price-row">
+                    <span class="now-price">¥12.9</span>
+                    <span class="old-price">¥22.9</span>
+                </div>
+                <div class="group-tip">已有36人拼团</div>
+            </div>
+        </div>
+        <div class="group-card">
+            <div class="card-img">有机青菜</div>
+            <div class="card-body">
+                <div class="card-name">本地青菜 2斤装</div>
+                <div class="price-row">
+                    <span class="now-price">¥3.9</span>
+                    <span class="old-price">¥8.9</span>
+                </div>
+                <div class="group-tip">已有72人拼团</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI客服入口 -->
+    <div style="padding:15px;margin:10px;background:#dbeafe;border-radius:10px" onclick="openAi()">
+        <h3>🤖 AI智能客服</h3>
+        <p>自动生成菜谱、坏果图片理赔、团购咨询</p>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="tab-bar">
+        <div class="tab-item active"><span>🏠</span><span>首页</span></div>
+        <div class="tab-item"><span>🛒</span><span>团购</span></div>
+        <div class="tab-item"><span>🛺</span><span>购物车</span></div>
+        <div class="tab-item"><span>📦</span><span>订单</span></div>
+        <div class="tab-item"><span>👤</span><span>我的</span></div>
+    </div>
+
+    <!-- 商品详情弹窗 -->
+    <div class="mask" id="detailMask">
+        <div class="pop">
+            <div class="pop-title">奶油草莓 500g</div>
+            <p>团购价：¥12.9 | 明日社区自提</p>
+            <p>AI推荐菜谱：草莓酸奶沙拉、草莓蛋糕</p>
+            <p>售后：上传坏果图片AI自动定损理赔</p>
+            <button class="btn">加入购物车（Redis缓存）</button>
+            <button class="btn ai-btn">发起拼团</button>
+            <button class="btn" onclick="closeMask()">关闭</button>
+        </div>
+    </div>
+
+    <!-- AI客服弹窗 -->
+    <div class="mask" id="aiMask">
+        <div class="pop">
+            <div class="pop-title">AI智能导购</div>
+            <p>1. 生成一周生鲜菜谱</p>
+            <p>2. 上传坏果图片自动理赔</p>
+            <p>3. 团购活动文案生成</p>
+            <input placeholder="输入你的需求" style="width:100%;padding:8px;margin-top:8px;border:1px solid #ddd;border-radius:6px">
+            <button class="btn ai-btn">发送对话（Redis缓存会话）</button>
+            <button class="btn" onclick="closeAiMask()">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        const detailMask = document.getElementById('detailMask')
+        const aiMask = document.getElementById('aiMask')
+        function openDetail(){detailMask.style.display='flex'}
+        function closeMask(){detailMask.style.display='none'}
+        function openAi(){aiMask.style.display='flex'}
+        function closeAiMask(){aiMask.style.display='none'}
+    </script>
+</body>
+</html>

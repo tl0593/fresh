@@ -1,0 +1,33 @@
+:host {
+  padding-bottom: 100rpx;
+}
+
+.cart-manage-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12rpx 32rpx 4rpx;
+  background: transparent;
+}
+
+.cart-manage-link {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 40rpx;
+  padding: 8rpx 4rpx;
+}
+
+.cart-manage-link--done {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.gap {
+  height: 100rpx;
+  width: 100%;
+}
+
+.t-button {
+  --td-button-default-color: #000;
+  --td-button-primary-text-color: #fa4126;
+}

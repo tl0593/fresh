@@ -1,0 +1,12 @@
+package com.fresh.goods.dto;
+
+import lombok.Data;
+
+@Data
+public class GoodsPriceQueryDTO {
+
+    private Long goodsId;
+    private Long specId;
+    private Integer activityType;
+    private Long activityId;
+}

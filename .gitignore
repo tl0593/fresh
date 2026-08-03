@@ -1,0 +1,44 @@
+# ===== secrets / local env =====
+.env
+.env.*
+!.env.example
+fresh-parent/.env
+fresh-parent/.env.*
+!fresh-parent/.env.example
+**/application-local.properties
+**/application-*-local.properties
+
+# ===== DB dumps / runtime data =====
+backup/**
+!backup/.gitkeep
+**/uploads/
+*.sql.bak
+*.dump
+
+# ===== build / deps =====
+**/target/
+**/node_modules/
+**/dist/
+**/miniprogram_npm/
+unpackage/
+.turbo/
+
+# ===== IDE / OS =====
+.idea/
+*.iml
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+
+# ===== Cursor / local agent =====
+.cursor/
+*.local
+
+# ===== WeChat mini program private =====
+**/project.private.config.json
+
+# ===== screenshots / misc local =====
+ScreenShot_*.png
+*.tmp

@@ -1,0 +1,16 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+  <view wx:elif="{{!list.length}}" class="empty">暂无团购活动</view>
+  <view
+    class="card"
+    wx:for="{{list}}"
+    wx:key="id"
+    data-goodsid="{{item.goodsId}}"
+    data-id="{{item.id}}"
+    bindtap="goDetail"
+  >
+    <view class="title">{{item.title}}</view>
+    <view class="meta">成团 {{item.groupNum || '-'}} 人 · 剩 {{item.stock || 0}} 份</view>
+    <view class="price">¥{{item.price}}</view>
+  </view>
+</view>

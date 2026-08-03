@@ -1,0 +1,31 @@
+<wxs src="./utils.wxs" module="Utils" />
+
+<!-- 本地 http / 临时文件：原生 image，避免 TDesign 把路径解析成 /image/fresh -->
+<!-- t-class 必须挂在可布局节点上，否则分类页 goods-row__img 的宽高不会生效 -->
+<view wx:if="{{useNative}}" class="webp-native-wrap t-class">
+  <image
+    wx:if="{{displaySrc}}"
+    class="J-image webp-native-image"
+    src="{{displaySrc}}"
+    mode="{{mode}}"
+    lazy-load="{{lazyLoad}}"
+    show-menu-by-longpress="{{showMenuByLongpress}}"
+    bindload="handleImageLoad"
+    binderror="handleImageError"
+  />
+</view>
+<!-- 远程 https -->
+<t-image
+  wx:else
+  t-class="J-image"
+  t-class="t-class"
+  t-class-load="t-class-load"
+  src="{{Utils.getSrc({src: displaySrc || src, thumbWidth: thumbWidth || 0, thumbHeight: thumbHeight || 0, systemInfo, webp, mode})}}"
+  mode="{{ mode }}"
+  lazy="{{ lazyLoad }}"
+  show-menu-by-longpress="{{showMenuByLongpress}}"
+  error="{{loadFailed}}"
+  loading="{{loading}}"
+  bind:error="handleImageError"
+  bind:load="handleImageLoad"
+/>

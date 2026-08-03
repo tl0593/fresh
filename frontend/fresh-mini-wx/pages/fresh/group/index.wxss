@@ -1,0 +1,32 @@
+.page {
+  padding: 24rpx;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e8f5e9 0%, #f7f7f7 40%);
+}
+.card {
+  background: #fff;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  border-radius: 16rpx;
+}
+.title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.meta {
+  margin-top: 12rpx;
+  color: #888;
+  font-size: 24rpx;
+}
+.price {
+  margin-top: 16rpx;
+  color: #2e7d32;
+  font-size: 36rpx;
+  font-weight: 700;
+}
+.empty {
+  text-align: center;
+  color: #999;
+  padding: 120rpx 0;
+}

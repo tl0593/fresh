@@ -1,0 +1,14 @@
+.webp-native-wrap {
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.webp-native-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  vertical-align: top;
+}

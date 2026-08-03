@@ -1,0 +1,27 @@
+<view class="page">
+  <block wx:if="{{!loading && list.length}}">
+    <view class="card" wx:for="{{list}}" wx:key="idx" wx:for-index="idx">
+      <view class="card-head" bindtap="onGoodsTap" data-spuid="{{item.spuId}}">
+        <view class="goods">{{item.goodsDetailInfo || ('商品 ' + item.spuId)}}</view>
+        <view class="time">{{item.commentTime}}</view>
+      </view>
+      <t-rate value="{{item.commentScore}}" count="{{5}}" size="14" gap="2" color="{{['#ffc51c', '#ddd']}}" />
+      <view class="content">{{item.commentContent || '（无文字评价）'}}</view>
+      <view class="imgs" wx:if="{{item.commentImageList.length}}">
+        <image
+          wx:for="{{item.commentImageList}}"
+          wx:for-item="img"
+          wx:key="*this"
+          src="{{img}}"
+          mode="aspectFill"
+          class="thumb"
+        />
+      </view>
+      <view class="reply" wx:if="{{item.sellerReply}}">商家回复：{{item.sellerReply}}</view>
+    </view>
+  </block>
+  <view wx:elif="{{!loading}}" class="empty">
+    <t-empty size="240rpx" textColor="#999" textSize="28rpx" src="{{emptyImg}}">暂无评价记录</t-empty>
+  </view>
+  <view wx:else class="loading">加载中...</view>
+</view>

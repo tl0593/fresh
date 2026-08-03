@@ -1,0 +1,202 @@
+.mall {
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 80% at 10% -10%, rgba(46, 139, 87, 0.18), transparent 55%),
+    linear-gradient(180deg, #e8f3ec 0%, #f6f3ee 42%, #f3f1ec 100%);
+  padding-bottom: 48rpx;
+  box-sizing: border-box;
+}
+.hero {
+  padding: 48rpx 36rpx 40rpx;
+  color: #163326;
+}
+.hero-brand {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  font-size: 44rpx;
+  letter-spacing: 2rpx;
+  font-weight: 700;
+}
+.hero-points {
+  margin-top: 28rpx;
+  display: flex;
+  align-items: baseline;
+  gap: 16rpx;
+}
+.hero-points .label {
+  font-size: 26rpx;
+  color: #4a6b58;
+}
+.hero-points .num {
+  font-size: 72rpx;
+  font-weight: 700;
+  color: #1f7a45;
+  line-height: 1;
+}
+.hero-desc {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #5f7266;
+}
+.tabs {
+  margin: 0 24rpx;
+  display: flex;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 999rpx;
+  padding: 8rpx;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 26rpx;
+  color: #66786d;
+  border-radius: 999rpx;
+}
+.tab.on {
+  background: #1f7a45;
+  color: #fff;
+  font-weight: 600;
+}
+.section-tip {
+  margin: 28rpx 32rpx 8rpx;
+  font-size: 24rpx;
+  color: #6b7c72;
+}
+.card {
+  margin: 20rpx 24rpx 0;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(31, 122, 69, 0.06);
+}
+.card-left {
+  width: 150rpx;
+  text-align: center;
+  color: #c45c26;
+}
+.card-left .yen {
+  font-size: 22rpx;
+  display: inline;
+}
+.card-left .amount {
+  font-size: 48rpx;
+  font-weight: 700;
+  display: inline;
+}
+.card-left .thr {
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+.card-mid {
+  flex: 1;
+  min-width: 0;
+}
+.card-mid .title {
+  font-size: 30rpx;
+  color: #222;
+  font-weight: 600;
+}
+.card-mid .meta {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+.card-mid .cost {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: #1f7a45;
+  font-weight: 600;
+}
+.btn {
+  padding: 14rpx 28rpx;
+  background: #1f7a45;
+  color: #fff;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+}
+.btn.disabled {
+  background: #b7c4bb;
+}
+.lottery-panel {
+  padding: 8rpx 24rpx 0;
+}
+.prize-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+.prize {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx 20rpx;
+  text-align: center;
+}
+.prize-name {
+  font-size: 28rpx;
+  color: #222;
+  font-weight: 600;
+}
+.prize-weight {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #99a89e;
+}
+.draw-result {
+  margin: 28rpx 8rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #c45c26;
+  font-weight: 600;
+}
+.draw-btn {
+  margin: 32rpx 8rpx 0;
+  background: linear-gradient(135deg, #2a8f52, #1f7a45);
+  color: #fff;
+  text-align: center;
+  padding: 28rpx 0;
+  border-radius: 999rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.draw-btn.disabled {
+  opacity: 0.65;
+}
+.log-card {
+  margin: 16rpx 24rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+.log-card .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.log-card .title {
+  font-size: 28rpx;
+  color: #333;
+}
+.log-card .num.plus {
+  color: #1f7a45;
+  font-weight: 600;
+}
+.log-card .num.minus {
+  color: #c45c26;
+  font-weight: 600;
+}
+.log-card .time {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+.empty {
+  text-align: center;
+  color: #99a89e;
+  padding: 120rpx 0;
+  font-size: 28rpx;
+}

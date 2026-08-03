@@ -1,0 +1,16 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+  <view wx:elif="{{!list.length}}" class="empty">暂无消息</view>
+  <view
+    class="card {{item.readFlag ? 'read' : ''}}"
+    wx:for="{{list}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    data-index="{{index}}"
+    bindtap="onRead"
+  >
+    <view class="title">{{item.title || '通知'}}</view>
+    <view class="content">{{item.content}}</view>
+    <view class="time">{{item.createTime}}</view>
+  </view>
+</view>

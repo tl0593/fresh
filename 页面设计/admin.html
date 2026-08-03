@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧生鲜团购管理后台</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft YaHei}
+        html,body{height:100%}
+        /* 整体布局：侧边栏+顶部+主内容 */
+        .admin-wrap{display:flex;height:100%}
+        /* 左侧菜单 */
+        .aside{width:220px;background:#1f2937;color:#fff}
+        .aside-logo{height:60px;line-height:60px;text-align:center;font-size:18px;border-bottom:1px solid #374151}
+        .menu-item{padding:12px 20px;cursor:pointer;color:#d1d5db}
+        .menu-item.active{background:#10b981;color:#fff}
+        /* 右侧区域 */
+        .main-box{flex:1;display:flex;flex-direction:column}
+        /* 顶部导航 */
+        .header{height:60px;background:#fff;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 20px;justify-content:space-between}
+        /* 内容区 */
+        .content{flex:1;background:#f3f4f6;padding:20px;overflow:auto}
+        .card{background:#fff;border-radius:8px;padding:20px;margin-bottom:20px}
+        .card-title{font-size:16px;font-weight:bold;margin-bottom:15px}
+        /* 表格 */
+        table{width:100%;border-collapse:collapse}
+        th,td{border:1px solid #eee;padding:10px;text-align:center}
+        th{background:#f9fafb}
+        /* 按钮 */
+        .btn{padding:6px 12px;border:none;border-radius:4px;cursor:pointer}
+        .btn-success{background:#10b981;color:#fff}
+        .btn-blue{background:#3b82f6;color:#fff}
+        .btn-orange{background:#f97316;color:#fff}
+    </style>
+</head>
+<body>
+    <div class="admin-wrap">
+        <!-- 左侧菜单栏 -->
+        <div class="aside">
+            <div class="aside-logo">AI生鲜团购后台</div>
+            <div class="menu-item active">📊 数据大屏首页</div>
+            <div class="menu-item">👥 用户管理</div>
+            <div class="menu-item">🥬 商品/团购管理</div>
+            <div class="menu-item">📦 订单&售后工单</div>
+            <div class="menu-item">🤖 AI知识库管理</div>
+            <div class="menu-item">📩 消息推送配置</div>
+            <div class="menu-item">⚙️ 权限&日志</div>
+        </div>
+
+        <!-- 右侧主区域 -->
+        <div class="main-box">
+            <!-- 顶部导航 -->
+            <div class="header">
+                <span>当前：数据可视化大屏</span>
+                <span>管理员 | 退出登录</span>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <!-- 数据统计卡片 -->
+                <div class="card">
+                    <div class="card-title">平台核心数据（data-service统计）</div>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:15px">
+                        <div style="padding:15px;background:#ecfdf5;border-radius:8px">今日订单：1286单</div>
+                        <div style="padding:15px;background:#dbeafe;border-radius:8px">活跃用户：3621人</div>
+                        <div style="padding:15px;background:#fef3c7;border-radius:8px">成团商品：216款</div>
+                        <div style="padding:15px;background:#fee2e2;border-radius:8px">售后工单：23条</div>
+                    </div>
+                </div>
+
+                <!-- 订单售后工单列表（AI理赔复核） -->
+                <div class="card">
+                    <div class="card-title">售后工单列表（AI图像识别自动定损）</div>
+                    <table>
+                        <tr>
+                            <th>工单ID</th>
+                            <th>用户</th>
+                            <th>商品</th>
+                            <th>AI识别损坏程度</th>
+                            <th>AI核算理赔金额</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td>SH20260728001</td>
+                            <td>张先生</td>
+                            <td>奶油草莓</td>
+                            <td>中度腐烂 40%</td>
+                            <td>¥5.2</td>
+                            <td>待人工审核</td>
+                            <td>
+                                <button class="btn btn-blue">查看图片</button>
+                                <button class="btn btn-success">通过理赔</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SH20260728002</td>
+                            <td>李女士</td>
+                            <td>本地青菜</td>
+                            <td>轻微磕碰 15%</td>
+                            <td>¥0.6</td>
+                            <td>已完成</td>
+                            <td><button class="btn">详情</button></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 团购活动配置入口 -->
+                <div class="card">
+                    <div class="card-title">团购活动管理（goods-service）</div>
+                    <button class="btn btn-orange">新建团购活动</button>
+                    <p style="margin-top:10px">创建活动可调用AI生成宣传文案（ai-service）</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

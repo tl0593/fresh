@@ -1,0 +1,104 @@
+<view class="page">
+  <view class="page-head">
+    <text class="page-head-title">商品评价</text>
+    <view class="one-click" bindtap="onOneClickGood">一键好评</view>
+  </view>
+
+  <view class="goods-card" wx:for="{{formList}}" wx:key="orderItemId" wx:for-index="idx">
+    <view class="goods-row">
+      <t-image t-class="goods-thumb" src="{{item.thumb}}" mode="aspectFill" />
+      <view class="goods-meta">
+        <view class="goods-title">{{item.title}}</view>
+        <view class="goods-spec" wx:if="{{item.specText}}">{{item.specText}}</view>
+      </view>
+      <view class="attitude">
+        <view
+          class="attitude-btn {{item.attitude==='bad' ? 'on bad' : ''}}"
+          data-index="{{idx}}"
+          data-attitude="bad"
+          bindtap="onAttitudeTap"
+        >
+          <t-icon
+            name="{{item.attitude==='bad' ? 'thumb-down-filled' : 'thumb-down'}}"
+            size="40rpx"
+            color="{{item.attitude==='bad' ? '#fa4126' : '#bbbbbb'}}"
+          />
+        </view>
+        <view
+          class="attitude-btn {{item.attitude==='good' ? 'on good' : ''}}"
+          data-index="{{idx}}"
+          data-attitude="good"
+          bindtap="onAttitudeTap"
+        >
+          <t-icon
+            name="{{item.attitude==='good' ? 'thumb-up-filled' : 'thumb-up'}}"
+            size="40rpx"
+            color="{{item.attitude==='good' ? '#07c160' : '#bbbbbb'}}"
+          />
+        </view>
+      </view>
+    </view>
+
+    <view class="tag-row">
+      <view
+        class="tag {{tag.selected ? 'on' : ''}}"
+        wx:for="{{item.tagOptions}}"
+        wx:for-item="tag"
+        wx:key="name"
+        data-index="{{idx}}"
+        data-tag="{{tag.name}}"
+        bindtap="onTagTap"
+      >{{tag.name}}</view>
+    </view>
+
+    <view class="textarea-wrap">
+      <t-textarea
+        t-class="textarea"
+        maxlength="{{150}}"
+        indicator
+        value="{{item.content}}"
+        placeholder="{{item.attitude==='bad' ? '说说哪里不满意，帮助我们改进~' : '说说商品的优点吧，其他顾客也想知道~'}}"
+        data-index="{{idx}}"
+        bind:change="onContentChange"
+      />
+    </view>
+
+    <view class="upload-row">
+      <t-upload
+        media-type="{{['image']}}"
+        files="{{item.uploadFiles}}"
+        max="{{3}}"
+        gridConfig="{{gridConfig}}"
+        imageProps="{{imageProps}}"
+        data-index="{{idx}}"
+        bind:add="handleAdd"
+        bind:remove="handleRemove"
+        bind:success="handleSuccess"
+      />
+      <view class="upload-tip">上传图片更能帮助他人了解商品</view>
+    </view>
+
+    <view class="declare-row">
+      <t-checkbox
+        checked="{{item.aiDeclared}}"
+        color="#FA4126"
+        data-index="{{idx}}"
+        bind:change="onAiDeclareChange"
+      />
+      <text class="declare-text">内容声明：评价包含AI生成的内容</text>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view class="submit-bar">
+  <t-button
+    content="发表评价"
+    block
+    shape="round"
+    t-class="submit-btn{{canSubmit ? '' : ' disabled'}}"
+    bind:tap="onSubmitBtnClick"
+  />
+</view>
+<t-toast id="t-toast" />

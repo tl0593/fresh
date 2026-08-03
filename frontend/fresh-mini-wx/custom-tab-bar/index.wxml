@@ -1,0 +1,25 @@
+<view class="tab-bar">
+  <view class="tab-bar__blur"></view>
+  <view class="tab-bar__inner">
+    <view
+      wx:for="{{list}}"
+      wx:key="url"
+      class="tab-item {{active === index ? 'on' : ''}}"
+      data-index="{{index}}"
+      bindtap="onChange"
+    >
+      <view class="tab-icon-wrap {{item.icon === 'cart' && cartBump ? 'bump' : ''}}">
+        <view class="tab-icon-bg" wx:if="{{active === index}}"></view>
+        <t-icon
+          name="{{active === index ? item.icon : item.icon}}"
+          size="44rpx"
+          color="{{active === index ? '#fa4126' : '#9a9a9a'}}"
+        />
+        <view class="tab-badge" wx:if="{{item.icon === 'cart' && cartNum > 0}}">
+          {{cartNum > 99 ? '99+' : cartNum}}
+        </view>
+      </view>
+      <text class="tab-text">{{item.text}}</text>
+    </view>
+  </view>
+</view>

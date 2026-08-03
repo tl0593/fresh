@@ -1,0 +1,55 @@
+<view class="center">
+  <view class="hero">
+    <view class="brand">FRESH 领券中心</view>
+    <view class="headline">新鲜优惠，随到随领</view>
+    <view class="sub">每日固定券一键领 · 整点限量抢 · 也可去积分商城兑券抽奖</view>
+    <view class="hero-actions">
+      <view class="primary-btn {{batching?'disabled':''}}" bindtap="onBatchReceive">
+        {{batching ? '领取中...' : '一键领取今日券'}}
+      </view>
+      <view class="ghost-btn" bindtap="goIntegralMall">积分商城</view>
+    </view>
+  </view>
+
+  <t-pull-down-refresh
+    t-class-indicator="t-class-indicator"
+    value="{{pullDownRefreshing}}"
+    bind:refresh="onPullDownRefresh_"
+    background="transparent"
+  >
+    <view class="section">
+      <view class="section-head">
+        <view class="section-title">整点抢券</view>
+        <view class="section-extra">当前 {{nowHour}}:00</view>
+      </view>
+      <view wx:if="{{!seckillList.length}}" class="section-empty">暂无整点抢券活动，可在管理端配置</view>
+      <view class="flash-card" wx:for="{{seckillList}}" wx:key="id">
+        <view class="flash-left">
+          <view class="flash-amount"><text class="yen">¥</text>{{item.value / 100}}</view>
+          <view class="flash-thr">{{item.base > 0 ? ('满' + item.base / 100 + '可用') : '无门槛'}}</view>
+        </view>
+        <view class="flash-mid">
+          <view class="flash-title">{{item.title}}</view>
+          <view class="flash-meta">{{item.grabStatusText}} · 剩 {{item.remainStock}}</view>
+        </view>
+        <view
+          class="flash-btn {{item.canGrab && grabbingId!==item.id ? '' : 'disabled'}}"
+          data-id="{{item.id}}"
+          data-can="{{item.canGrab}}"
+          bindtap="onGrab"
+        >{{item.canGrab ? (grabbingId===item.id ? '抢购中' : '立即抢') : (item.grabStatus===0 ? '未开抢' : '已结束')}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head">
+        <view class="section-title">每日可领</view>
+        <view class="section-extra">单张领取或顶部一键领</view>
+      </view>
+      <view class="coupon-list-item" wx:for="{{couponList}}" wx:key="key">
+        <coupon-card couponDTO="{{item}}" bind:receive="onReceive" />
+      </view>
+      <view class="section-empty" wx:if="{{!couponList.length && !pullDownRefreshing}}">暂无可领优惠券</view>
+    </view>
+  </t-pull-down-refresh>
+</view>

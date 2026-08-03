@@ -1,0 +1,120 @@
+<view class="cat-page">
+  <!-- 顶部搜索 -->
+  <view class="cat-search">
+    <view class="cat-search__bar">
+      <t-icon name="search" size="36rpx" color="#999" />
+      <input
+        class="cat-search__input"
+        type="text"
+        confirm-type="search"
+        placeholder="搜索生鲜商品"
+        value="{{keyword}}"
+        bindinput="onKeywordInput"
+        bindconfirm="onSearch"
+      />
+      <view class="cat-search__btn" bindtap="onSearch">搜索</view>
+    </view>
+  </view>
+
+  <!-- 一级分类横向滚动 -->
+  <scroll-view class="cat-roots" scroll-x enable-flex wx:if="{{roots.length}}">
+    <view
+      wx:for="{{roots}}"
+      wx:key="id"
+      class="cat-root {{rootIndex === index ? 'cat-root--active' : ''}}"
+      data-index="{{index}}"
+      bindtap="onRootTap"
+    >
+      <view class="cat-root__icon-wrap">
+        <t-image wx:if="{{item.icon}}" src="{{item.icon}}" t-class="cat-root__icon" mode="aspectFill" />
+        <view wx:else class="cat-root__icon cat-root__icon--placeholder">{{item.name[0] || ''}}</view>
+      </view>
+      <text class="cat-root__name">{{item.name}}</text>
+    </view>
+  </scroll-view>
+
+  <view class="cat-body">
+    <!-- 左侧二级分类 -->
+    <scroll-view class="cat-side" scroll-y>
+      <view
+        wx:for="{{sideList}}"
+        wx:key="id"
+        class="cat-side__item {{sideIndex === index ? 'cat-side__item--active' : ''}}"
+        data-index="{{index}}"
+        bindtap="onSideTap"
+      >
+        <text>{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧商品 -->
+    <view class="cat-main">
+      <view class="cat-sort">
+        <view
+          class="cat-sort__item {{sortType === 'sale' ? 'cat-sort__item--active' : ''}}"
+          data-type="sale"
+          bindtap="onSortTap"
+        >销量</view>
+        <view
+          class="cat-sort__item {{sortType === 'price' ? 'cat-sort__item--active' : ''}}"
+          data-type="price"
+          bindtap="onSortTap"
+        >
+          价格
+          <view class="cat-sort__arrows">
+            <view class="arrow arrow-up {{sortType === 'price' && sortOrder === 'asc' ? 'arrow--on' : ''}}" />
+            <view class="arrow arrow-down {{sortType === 'price' && sortOrder === 'desc' ? 'arrow--on' : ''}}" />
+          </view>
+        </view>
+      </view>
+
+      <scroll-view
+        class="cat-goods"
+        scroll-y
+        bindscrolltolower="onReachGoodsBottom"
+      >
+        <view wx:if="{{loading && !goodsList.length}}" class="cat-loading">
+          <t-loading theme="circular" size="40rpx" text="加载中..." />
+        </view>
+
+        <view wx:elif="{{!goodsList.length && hasLoaded}}" class="cat-empty">
+          <t-empty description="暂无相关商品" />
+        </view>
+
+        <block wx:else>
+          <view
+            wx:for="{{goodsList}}"
+            wx:key="spuId"
+            class="goods-row"
+            data-id="{{item.spuId}}"
+            bindtap="gotoDetail"
+          >
+            <view class="goods-row__img">
+              <t-image src="{{item.thumb}}" t-class="goods-row__img-inner" mode="aspectFill" lazy-load />
+            </view>
+            <view class="goods-row__body">
+              <view class="goods-row__title">{{item.title}}</view>
+              <view class="goods-row__meta" wx:if="{{item.soldNum}}">已售 {{item.soldNum}}{{item.unit || ''}}</view>
+              <view class="goods-row__foot">
+                <price
+                  symbol="¥"
+                  price="{{item.price}}"
+                  wr-class="goods-row__price"
+                  symbol-class="goods-row__price-symbol"
+                />
+                <view
+                  class="goods-row__add"
+                  data-id="{{item.spuId}}"
+                  catchtap="onAddCart"
+                >+</view>
+              </view>
+            </view>
+          </view>
+          <load-more wx:if="{{goodsList.length}}" status="{{loadMoreStatus}}" no-more-text="没有更多了" />
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

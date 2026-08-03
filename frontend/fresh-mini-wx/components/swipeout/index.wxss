@@ -1,0 +1,29 @@
+.wr-swipeout {
+  position: relative;
+  overflow: hidden;
+}
+.wr-swipeout__wrapper {
+  position: relative;
+}
+.wr-swipeout__content {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+}
+.wr-swipeout__left,
+.wr-swipeout__right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: stretch;
+}
+.wr-swipeout__left {
+  left: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.wr-swipeout__right {
+  right: 0;
+  transform: translate3d(100%, 0, 0);
+}

@@ -1,0 +1,77 @@
+<view class="address-detail">
+  <view class="divider-line" />
+  <view class="form-address">
+    <form class="form-content">
+      <t-cell-group>
+        <t-cell class="form-cell" t-class-title="t-cell-title" title="联系人" t-class-note="t-cell-note">
+          <t-input
+            class="t-input"
+            slot="note"
+            t-class="field-text"
+            borderless
+            data-item="name"
+            maxlength="20"
+            type="text"
+            value="{{locationState.name}}"
+            placeholder="您的姓名"
+            bind:change="onInputValue"
+          />
+        </t-cell>
+        <t-cell class="form-cell" t-class-title="t-cell-title" title="手机号">
+          <t-input
+            slot="note"
+            class="t-input"
+            t-class="field-text"
+            borderless
+            type="number"
+            value="{{locationState.phone}}"
+            maxlength="11"
+            placeholder="联系您的手机号"
+            bind:change="onInputValue"
+            data-item="phone"
+          />
+        </t-cell>
+        <t-cell class="form-cell" t-class-title="t-cell-title" title="自提点">
+          <t-input
+            slot="note"
+            class="t-input"
+            t-class="field-text"
+            borderless
+            data-item="community"
+            type="text"
+            value="{{locationState.community}}"
+            placeholder="社区自提点名称"
+            bind:change="onInputValue"
+          />
+        </t-cell>
+        <t-cell class="form-cell" t-class-title="t-cell-title" title="详细地址" bordered="{{false}}">
+          <view slot="note" class="textarea__wrapper">
+            <t-textarea
+              slot="note"
+              type="text"
+              value="{{locationState.detailAddress}}"
+              placeholder="楼栋/单元/门牌号等"
+              autosize
+              bind:change="onInputValue"
+              data-item="detailAddress"
+            />
+          </view>
+        </t-cell>
+
+        <view class="divider-line" />
+        <t-cell title="设为默认自提地址" bordered="{{false}}">
+          <t-switch
+            value="{{locationState.isDefault}}"
+            slot="note"
+            colors="{{['#0ABF5B', '#c6c6c6']}}"
+            bind:change="onCheckDefaultAddress"
+          />
+        </t-cell>
+      </t-cell-group>
+      <view class="submit">
+        <t-button shape="round" block disabled="{{!submitActive}}" bind:tap="formSubmit"> 保存 </t-button>
+      </view>
+    </form>
+  </view>
+</view>
+<t-toast id="t-toast" />

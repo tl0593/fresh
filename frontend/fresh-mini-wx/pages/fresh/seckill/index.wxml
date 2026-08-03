@@ -1,0 +1,17 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+  <view wx:elif="{{!list.length}}" class="empty">暂无秒杀活动</view>
+  <view
+    class="card"
+    wx:for="{{list}}"
+    wx:key="id"
+    data-goodsid="{{item.goodsId}}"
+    data-id="{{item.id}}"
+    bindtap="goDetail"
+  >
+    <view class="tag">秒杀</view>
+    <view class="title">{{item.title}}</view>
+    <view class="meta">库存 {{item.stock || 0}}</view>
+    <view class="price">¥{{item.price}}</view>
+  </view>
+</view>

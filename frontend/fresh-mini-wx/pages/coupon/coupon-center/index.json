@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "领券中心",
+  "navigationBarBackgroundColor": "#1c6b3a",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "t-pull-down-refresh": "tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
+    "coupon-card": "../components/coupon-card/index"
+  }
+}

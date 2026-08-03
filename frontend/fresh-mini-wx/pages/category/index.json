@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "分类",
+  "usingComponents": {
+    "t-image": "/components/webp-image/index",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-empty": "tdesign-miniprogram/empty/empty",
+    "t-loading": "tdesign-miniprogram/loading/loading",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "price": "/components/price/index",
+    "load-more": "/components/load-more/index"
+  }
+}

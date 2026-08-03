@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "晒图评价",
+  "usingComponents": {
+    "t-image": "/components/webp-image/index",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-upload": "tdesign-miniprogram/upload/upload",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-toast": "tdesign-miniprogram/toast/toast"
+  }
+}

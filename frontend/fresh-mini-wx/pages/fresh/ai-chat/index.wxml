@@ -1,0 +1,17 @@
+<view class="page">
+  <scroll-view scroll-y class="chat" scroll-into-view="msg-{{messages.length - 1}}">
+    <view
+      id="msg-{{index}}"
+      class="bubble {{item.role}}"
+      wx:for="{{messages}}"
+      wx:key="index"
+    >
+      {{item.content}}
+    </view>
+  </scroll-view>
+  <view class="toolbar">
+    <view class="cook" bindtap="onCook">生成菜谱</view>
+    <input class="input" value="{{input}}" bindinput="onInput" placeholder="输入问题" confirm-type="send" bindconfirm="onSend" />
+    <view class="send" bindtap="onSend">发送</view>
+  </view>
+</view>
